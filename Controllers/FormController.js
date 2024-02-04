@@ -1,33 +1,33 @@
 import pool from '../Database/db.js'
 
-const createForm = async (req, res) =>{
-    const {name, prn, year, branch, activities, achievements, email, phone} = req.body;
+const createForm = async (req, res) => {
+    const { name, prn, year, branch, activities, achievements, email, phone } = req.body;
 
-    try{
+    try {
         const result = await pool.query(
             'INSERT INTO form (name, prn, year, branch, activities, achievements, email, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
             [name, prn, year, branch, activities, achievements, email, phone]
         );
 
-        res.json({message:"Filled form successfully", insertedId: result.insertId})
+        res.json({ message: "Filled form successfully", insertedId: result.insertId })
     }
-    catch(error){
-        console.log("An error occured");
-        res.status(500).json({error: "Internal Server Error"})
+    catch (error) {
+        console.log("An error occured", error);
+        res.status(500).json({ error: "Internal Server Error" })
     }
 }
 
-const getAllForms = async (req, res) =>{
-    try{
+const getAllForms = async (req, res) => {
+    try {
         const [result] = await pool.query(
             'SELECT * FROM form'
         );
 
         res.json(result)
     }
-    catch(error){
+    catch (error) {
         console.log("An error occured");
-        res.status(500).json({error: "Internal Server Error"})
+        res.status(500).json({ error: "Internal Server Error" })
     }
 }
 
@@ -69,11 +69,11 @@ const deleteFormById = async (req, res) => {
 
     try {
         const [result] = await pool.query('DELETE FROM form WHERE id = ?', [id]);
-        
+
         if (result.affectedRows === 0) {
             res.status(404).json({ error: 'Form not found' });
         } else {
-            res.json({ message: 'form deleted successfully' });
+            res.json({ message: 'Form deleted successfully' });
         }
     } catch (error) {
         console.error(error);
@@ -81,4 +81,4 @@ const deleteFormById = async (req, res) => {
     }
 };
 
-export {createForm, getAllForms, getFormById, updateFormById, deleteFormById}
+export { createForm, getAllForms, getFormById, updateFormById, deleteFormById }

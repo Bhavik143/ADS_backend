@@ -1,5 +1,5 @@
 import express from "express";
-import {createForm, getAllForms, getFormById, updateFormById, deleteFormById} from '../Controllers/FormController.js'
+import { createForm, getAllForms, getFormById, updateFormById, deleteFormById } from '../Controllers/FormController.js'
 
 const FormRouter = express.Router();
 
